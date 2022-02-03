@@ -1,3 +1,4 @@
 {
-  "mongoURI": "mongodb+srv://igorrussi:Vancouver@sunnyconnector.ighkq.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+  "mongoURI": "mongodb+srv://igorrussi:Vancouver@sunnyconnector.ighkq.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+  "jwtSecret": "mysecrettoken"
 }
