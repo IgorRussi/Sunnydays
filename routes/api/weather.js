@@ -1,7 +1,9 @@
 const express = require("express");
 const router = express.Router();
-
 const axios = require("axios");
+
+// TODO - is it the best solution?
+const cityList = [];
 
 // @route    GET api/weather
 // @desc     Test route
@@ -18,7 +20,19 @@ router.get("/city/:cityname", async (req, res) => {
     );
 
     const cityResponse = await axios.get(uri);
-    return res.json(cityResponse.data);
+    const data = cityResponse.data;
+    
+    data.list.map(cityObj => {
+      let city = new Object();
+
+      city.name = cityObj.name;
+      city.coord = cityObj.coord;
+      city.country = cityObj.sys.country;
+
+      cityList.push(city);
+    })
+
+    return res.json(cityList);
   } catch (err) {
     console.error(err.message);
     return res.status(404).json({ msg: "Server Error" });
