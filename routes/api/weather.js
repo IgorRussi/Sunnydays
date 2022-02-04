@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-
 const axios = require("axios");
 
 // @route    GET api/weather
