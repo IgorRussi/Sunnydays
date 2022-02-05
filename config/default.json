@@ -1,4 +1,6 @@
 {
   "mongoURI": "mongodb+srv://igorrussi:Vancouver@sunnyconnector.ighkq.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
-  "jwtSecret": "mysecrettoken"
+  "jwtSecret": "mysecrettoken",
+  "apikey": "ac1c1295d9d19819a42aed95fb4103d6",
+  "appid": "439d4b804bc8187953eb36d2a8c26a02"
 }
