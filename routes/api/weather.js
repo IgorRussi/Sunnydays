@@ -42,7 +42,9 @@ router.get("/:lat/:lon", async (req, res) => {
     const uri = encodeURI(
       `https://api.openweathermap.org/data/2.5/onecall?lat=${
         req.params.lat
-      }&lon=${req.params.lon}&appid=${config.get("apikey")}&units=metric`
+      }&lon=${req.params.lon}&appid=${config.get(
+        "apikey"
+      )}&units=metric&exclude=minutely`
     );
 
     const weatherResponse = await axios.get(uri);
