@@ -46,21 +46,50 @@ router.get("/:lat/:lon", async (req, res) => {
         "apikey"
       )}&units=metric&exclude=minutely`
     );
-
+    const hourlyList = [];
+    const dailyList = [];
     const weatherResponse = await axios.get(uri);
     const data = weatherResponse.data;
 
-    // data.list.map((cityObj) => {
-    //   let city = new Object();
+    let weather = new Object();
+    weather.current = new Object();
 
-    //   city.name = cityObj.name;
-    //   city.coord = cityObj.coord;
-    //   city.country = cityObj.sys.country;
+    weather.current.dt = data.current.dt;
 
-    //   cityList.push(city);
-    // });
+    data.hourly.map((hourlyObj) => {
+      let hourly = new Object();
+      // To do : try a best code for that!
 
-    return res.json(data);
+      hourly.dt = hourlyObj.dt;
+      hourly.sunrise = hourlyObj.sunrise;
+      hourly.sunset = hourlyObj.sunset;
+      hourly.temp = hourlyObj.temp;
+      hourly.feels_like = hourlyObj.feels_like;
+      hourly.humidity = hourlyObj.humidity;
+      hourly.weather = hourlyObj.weather;
+
+      hourlyList.push(hourly);
+    });
+
+    weather.hourly = hourlyList;
+
+    data.daily.map((dailyObj) => {
+      let daily = new Object();
+
+      daily.dt = dailyObj.dt;
+      daily.sunrise = dailyObj.sunrise;
+      daily.sunset = dailyObj.sunset;
+      daily.temp = dailyObj.temp;
+      daily.feels_like = dailyObj.feels_like;
+      daily.humidity = dailyObj.humidity;
+      daily.weather = dailyObj.weather;
+
+      dailyList.push(daily);
+    });
+
+    weather.daily = dailyList;
+
+    return res.json(weather);
   } catch (err) {
     console.error(err.message);
     return res.status(404).json({ msg: "Server Error" });
