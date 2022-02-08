@@ -52,10 +52,17 @@ router.get("/:lat/:lon", async (req, res) => {
 
     let weather = new Object();
 
+    weather = {
+      lat: data.lat,
+      lon: data.lon,
+      timezone: data.timezone,
+      timezone_offset: data.timezone_offset,
+    };
+
     weather.current = {
-      dt: data.current.dt,
-      sunrise: data.current.sunrise,
-      sunset: data.current.sunset,
+      dt: new Date(data.current.dt * 1000),
+      sunrise: new Date(data.current.sunrise * 1000),
+      sunset: new Date(data.current.sunset * 1000),
       temp: data.current.temp,
       feels_like: data.current.feels_like,
       humidity: data.current.humidity,
