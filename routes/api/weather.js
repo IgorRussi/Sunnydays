@@ -56,6 +56,12 @@ router.get("/:lat/:lon", async (req, res) => {
 
     weather.current.dt = data.current.dt;
 
+    // need await?
+    // const hourlyList = data.hourly.map((hourlyObj) => ({
+    //  dt: hourlyObj.dt, sunrise: hourlyObj.sunrise, sunset: hourlyObj.sunset,
+    //  temp: hourlyObj.temp, feels_like: hourlyObj.feels_like, 
+    //  humidity: hourlyObj.humidity, weather: hourlyObj.weather
+    //}));
     data.hourly.map((hourlyObj) => {
       let hourly = new Object();
       // To do : try a best code for that!
@@ -73,6 +79,12 @@ router.get("/:lat/:lon", async (req, res) => {
 
     weather.hourly = hourlyList;
 
+    // need await?
+    // const dailyList = data.hourly.map((dailyObj) => ({
+    //  dt: dailyObj.dt, sunrise: dailyObj.sunrise, sunset: dailyObj.sunset,
+    //  temp: dailyObj.temp, feels_like: dailyObj.feels_like, 
+    //  humidity: dailyObj.humidity, weather: dailyObj.weather
+    //}));    
     data.daily.map((dailyObj) => {
       let daily = new Object();
 
