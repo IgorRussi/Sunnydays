@@ -46,60 +46,41 @@ router.get("/:lat/:lon", async (req, res) => {
         "apikey"
       )}&units=metric&exclude=minutely`
     );
-    const hourlyList = [];
-    const dailyList = [];
+
     const weatherResponse = await axios.get(uri);
     const data = weatherResponse.data;
 
     let weather = new Object();
-    weather.current = new Object();
 
-    weather.current.dt = data.current.dt;
+    weather.current = {
+      dt: data.current.dt,
+      sunrise: data.current.sunrise,
+      sunset: data.current.sunset,
+      temp: data.current.temp,
+      feels_like: data.current.feels_like,
+      humidity: data.current.humidity,
+      weather: data.current.weather,
+    };
 
-    // need await?
-    // const hourlyList = data.hourly.map((hourlyObj) => ({
-    //  dt: hourlyObj.dt, sunrise: hourlyObj.sunrise, sunset: hourlyObj.sunset,
-    //  temp: hourlyObj.temp, feels_like: hourlyObj.feels_like, 
-    //  humidity: hourlyObj.humidity, weather: hourlyObj.weather
-    //}));
-    data.hourly.map((hourlyObj) => {
-      let hourly = new Object();
-      // To do : try a best code for that!
+    weather.hourly = data.hourly.map((hourlyObj) => ({
+      dt: hourlyObj.dt,
+      sunrise: hourlyObj.sunrise,
+      sunset: hourlyObj.sunset,
+      temp: hourlyObj.temp,
+      feels_like: hourlyObj.feels_like,
+      humidity: hourlyObj.humidity,
+      weather: hourlyObj.weather,
+    }));
 
-      hourly.dt = hourlyObj.dt;
-      hourly.sunrise = hourlyObj.sunrise;
-      hourly.sunset = hourlyObj.sunset;
-      hourly.temp = hourlyObj.temp;
-      hourly.feels_like = hourlyObj.feels_like;
-      hourly.humidity = hourlyObj.humidity;
-      hourly.weather = hourlyObj.weather;
-
-      hourlyList.push(hourly);
-    });
-
-    weather.hourly = hourlyList;
-
-    // need await?
-    // const dailyList = data.hourly.map((dailyObj) => ({
-    //  dt: dailyObj.dt, sunrise: dailyObj.sunrise, sunset: dailyObj.sunset,
-    //  temp: dailyObj.temp, feels_like: dailyObj.feels_like, 
-    //  humidity: dailyObj.humidity, weather: dailyObj.weather
-    //}));    
-    data.daily.map((dailyObj) => {
-      let daily = new Object();
-
-      daily.dt = dailyObj.dt;
-      daily.sunrise = dailyObj.sunrise;
-      daily.sunset = dailyObj.sunset;
-      daily.temp = dailyObj.temp;
-      daily.feels_like = dailyObj.feels_like;
-      daily.humidity = dailyObj.humidity;
-      daily.weather = dailyObj.weather;
-
-      dailyList.push(daily);
-    });
-
-    weather.daily = dailyList;
+    weather.daily = data.hourly.map((dailyObj) => ({
+      dt: dailyObj.dt,
+      sunrise: dailyObj.sunrise,
+      sunset: dailyObj.sunset,
+      temp: dailyObj.temp,
+      feels_like: dailyObj.feels_like,
+      humidity: dailyObj.humidity,
+      weather: dailyObj.weather,
+    }));
 
     return res.json(weather);
   } catch (err) {
